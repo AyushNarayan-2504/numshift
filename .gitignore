@@ -1,0 +1,13 @@
+# User-generated content, local secrets, caches, and development dependencies
+exports/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store

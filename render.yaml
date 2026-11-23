@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: numshift
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.9
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: AI_DAILY_LIMIT
+        value: "100"
+      - key: NUMSHIFT_WORKSPACE_EXPORTS
+        value: "false"
+      - key: NUMSHIFT_ALLOW_NULL_ORIGIN
+        value: "false"

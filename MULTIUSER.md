@@ -1,0 +1,9 @@
+# NumShift: anonymous multi-user setup
+
+NumShift's text, number and emoji editing runs in each browser tab independently. There are no shared live documents or accounts. Refreshing or closing a tab clears that tab's in-memory edits and its anonymous session identifier; users should copy or export their work first.
+
+The threaded Python server handles simultaneous requests. When users deliberately choose **Save to workspace**, the generated PDF/ZIP is sent to the server and saved under a random per-tab session directory in `exports/`. The web server does not serve export files or directory listings. These files are still accessible to the server/workspace operator; this is not encryption or an authenticated account system. The UI shows a unique filename so the correct file can be identified. Existing exports remain untouched.
+
+AI generation sends only the entered title and requested count to the server and OpenAI. Configure `OPENAI_API_KEY` on the server; optionally set `OPENAI_MODEL`. The preview does not include a key. The service limits AI requests per session and globally and caps concurrent upstream calls per server process. These in-memory limits are basic abuse protection, not robust identity, distributed rate limiting or billing controls.
+
+Run locally with `python3 server.py`; it listens on `0.0.0.0` and uses `PORT` (default `3000`). For deployment, use HTTPS, appropriately provisioned compute, monitoring, request size and concurrency limits, durable protected storage with an explicit deletion policy, and a proper production application server. Multiple server instances do not share the in-memory rate limit or local export storage. A public anonymous OpenAI endpoint can incur costs and requires stronger abuse controls before production. Many hosting platforms have ephemeral disks, and Vercel static hosting does not run this Python API without additional server-side deployment.
